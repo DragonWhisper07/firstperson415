@@ -8,14 +8,43 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class UNiagaraSystem;
+class UStaticMeshComponent;
+class UMaterialInterface;
+class UMaterialInstanceDynamic;
+class UMaterial;
 
-UCLASS(config=Game)
-class Afirstperson415Projectile : public AActor
+UCLASS(config = Game)
+class FIRSTPERSON415_API Afirstperson415Projectile : public AActor
 {
 	GENERATED_BODY()
 
+public:
+	Afirstperson415Projectile();
+
+protected:
+	virtual void BeginPlay() override;
+
+	/** Called when projectile hits something */
+	UFUNCTION()
+	void OnHit(
+		UPrimitiveComponent* HitComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		FVector NormalImpulse,
+		const FHitResult& Hit
+	);
+
+public:
+	/** Returns CollisionComp subobject */
+	USphereComponent* GetCollisionComp() const { return CollisionComp; }
+
+	/** Returns ProjectileMovement subobject */
+	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+protected:
 	/** Sphere collision component */
-	UPROPERTY(VisibleDefaultsOnly, Category=Projectile)
+	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
 	USphereComponent* CollisionComp;
 
 	/** Projectile movement component */
@@ -24,33 +53,19 @@ class Afirstperson415Projectile : public AActor
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* ballMesh;
-	
-	UPROPERTY(EditAnyWhere)
+
+	UPROPERTY(EditAnywhere)
 	UMaterial* baseMat;
 
 	UPROPERTY()
 	FLinearColor randColor;
 
-	UPROPERTY(EditAnyWhere)
+	UPROPERTY(EditAnywhere)
 	UMaterialInterface* projMat;
 
 	UPROPERTY()
-	UMaterialInstanceDynamic* dmiMat;;
+	UMaterialInstanceDynamic* dmiMat;
 
-
-public:
-	Afirstperson415Projectile();
-
-protected:
-	virtual void BeginPlay();
-
-	/** called when projectile hits something */
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-
-	/** Returns CollisionComp subobject **/
-	USphereComponent* GetCollisionComp() const { return CollisionComp; }
-	/** Returns ProjectileMovement subobject **/
-	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* colorP;
 };
-
