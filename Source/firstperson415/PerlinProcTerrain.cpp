@@ -63,9 +63,9 @@ void APerlinProcTerrain::CreateVertices()
 void APerlinProcTerrain::CreateTriangles()
 {
 	int Vertex = 0;
-	for (int X = 0; X <= XSize; X++)
+	for (int X = 0; X < XSize; X++)
 	{
-		for (int Y = 0; Y <= YSize; Y++)
+		for (int Y = 0; Y < YSize; Y++)
 		{
 			Triangles.Add(Vertex);
 			Triangles.Add(Vertex + 1);
